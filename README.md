@@ -5,6 +5,7 @@
 </p>
 
 This repository will host the code for our MICCAI 2024 paper.
+IN PREPARATION, estimated release date: 15th November.
 
 ## Related Publication:
 Javier Morlana, Juan D. Tardós J.M.M. Montiel, **Topological SLAM in colonoscopies leveraging deep features and topological priors**, *MICCAI 2024*. [PDF](https://arxiv.org/abs/2409.16806)
