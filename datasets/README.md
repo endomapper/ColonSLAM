@@ -1,0 +1,1 @@
+Code under datasets is adapted from the framework of F. Radenovic: https://github.com/filipradenovic/cnnimageretrieval-pytorch

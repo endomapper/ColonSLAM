@@ -1,0 +1,1 @@
+Code under cirtorch_networks comes from the framework of F. Radenovic: https://github.com/filipradenovic/cnnimageretrieval-pytorch
