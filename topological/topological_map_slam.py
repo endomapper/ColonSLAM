@@ -35,6 +35,7 @@ class TopologicalMapSLAM:
         self.nodes = OrderedDict()
         self.n_connections = OrderedDict()
         self.current_position = -1
+        self.state = "ok"
         self.last_inserted = None
         self.num_regional_nodes = 0
 
@@ -207,7 +208,7 @@ class TopologicalMapSLAM:
         # Covisible link can be added to current regional node or to a distant one
         # If the latter, we need to create a traversability link
         previous_position = self.current_position
-        if (covisible_id == previous_position):
+        if (covisible_id == previous_position) or self.state == "lost":
             # Covisible link to current regional node
             self.nodes[covisible_id].covisible_nodes.append(submap_node)
             print('Covisible node added to regional node {}'.format(covisible_id))
@@ -760,7 +761,7 @@ class TopologicalMapSLAM:
 
         state = {'nodes': ids, 'edges': list(self.nx_graph.edges), 'counter': counter, 
                  'image_names': image_names, 'localized': localized, 'candidates': candidates,
-                 'localized_image_list': localized_image_list}
+                 'localized_image_list': localized_image_list, 'loc_state': self.state}
         self.graph_updates[idx] = state
 
         print('>> {}: Graph updated'.format(idx))

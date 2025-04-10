@@ -140,6 +140,8 @@ def topometric_slam_reuse(conf, net, submaps, image_size, output_dim, transform,
     # Mode: update or localize
     mode = conf['mode']
 
+    last_localization = 0
+
     #### TODO: Number of nodes should be increased counting from the last inserted
     # Submap indexes should be somehow different to the ones in the graph
     # For now we just localize
@@ -193,12 +195,17 @@ def topometric_slam_reuse(conf, net, submaps, image_size, output_dim, transform,
                     graph.localized = loop_id
                     graph.add_covisible_link(submap_node, loop_id, slam=True)
                     graph.update_position(loop_id)
+                    last_localization = 0
+                    graph.state = "ok"
                 else:
                     # No localization, add just traversability link
                     print('>> No localization found, increase uncertainty......')
                     graph.increase_uncertainty()
-                    # graph.create_regional_node(submap_node)
+                    last_localization += 1
                 graph.localizations.append((submap_idx, loop_id))
+                if last_localization > 4:
+                    graph.state = "lost"
+                    print(f'>> No localization found for {last_localization} nodes, system is lost...')
             else:
                 # Just localize the node
                 if localization_status:
